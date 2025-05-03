@@ -1,0 +1,138 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formulaire de notation{% endblock %}
+
+
+{% block importmap %}
+    <script src="{{ asset('appJouer.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    {# Modales communes à plusieurs Twig #}
+    {% include 'partie_multi/partials/modal.html.twig' %}
+    {% include 'partie_multi/partials/modal_img.html.twig' %}
+
+    {# Partial et modale spécifique à la notation #}
+    {% set varInfoSurPartie  %}
+        {% include 'partie_multi/noter/partials_toutNoter/partial_noter.html.twig' %}
+    {% endset %}
+
+    {% include 'partie_multi/noter/partials_toutNoter/modal_noter.html.twig' %}
+
+     {% set typeInfo = 'notation' %}
+
+     <input type="hidden" id="hidden_url_epreuve_duree_restante" value= {{ url("app_jouer_multi__envoi_info_frontend", {
+                idPartie: partieId,
+                typeInfo: typeInfo,
+                numeroEpreuve: numeroEpreuve,
+                epreuveEtat: epreuveEtat,
+                codeConnexion: codeConnexion,
+                FlagRedacsTerminees: FlagRedacsTerminees,
+                FlagNotationsTerminees: FlagNotationsTerminees
+    }) |e('url') }}/> 
+
+    <span class="noter_messageBienvenue">Formulaire de notation de la partie: </span> <span class="noter_codeConnexion"> {{ codeConnexion}} </span>
+    <BR>
+    <div>
+        <button type="button" class="btn btn-secondary center-block btn-sm" 
+            data-bs-toggle="modal" 
+            data-bs-target="#NoterModale"
+            data-title="Explication">
+            Informations sur la partie
+        </button>
+    </div>
+    <BR>
+    <BR>
+    <h4>Notation de l'épreuve numéro: {{ numeroEpreuve }}</h4>
+    
+    <BR>
+    <div id="divIdCompteARebourNotation" >
+        <p id="idCompteARebour">Fin dans: {{  dureeNotation }} sec...</p>
+    </div>
+    
+    <BR>
+    <strong>Description de l'épreuve:</strong> {{ descriptionEpreuve }}
+
+     {{ form_start(form, {'attr': {'id': 'auto-submit-form'} } ) }} 
+        {{ form_row(form._token)}} 
+
+            {% for enfant in form.enfants %}
+                <BR><BR>
+                {{ form_row(enfant.redaction) }}
+
+                {% if enfant.redaction.vars.value.redaction is empty %}
+                    {{ form_row(enfant.note, { 'attr': {'readonly': 'readonly'}, 'value': 0, 'help' : 'La saisie de la note a été désactivée, car le joueur n\'a pas réalisé l\'exercice!' })  }}
+                    {{ form_row(enfant.remarque, { 'attr': {'readonly': 'readonly'}, 'disabled': true, 'help' : 'La saisie de la remarque a été désactivée, car le joueur n\'a pas réalisé l\'exercice!' }) }}
+                
+                {% else %}
+                    <div class="range-container">
+                        {{form_label(enfant.note) }}
+                        {{ form_widget(enfant.note, {'attr': {'class': 'range-slider'}}) }}
+                        {{ form_help(enfant.note) }}
+                        <span class="range-value">{{ enfant.note.vars.value }}</span>
+                    </div>
+
+                    {{ form_row(enfant.remarque) }}
+
+                {% endif %}
+
+                
+            {% endfor %}
+        <BR>
+        {{ form_row(form.Envoyer, { 'label': 'Envoyer' }) }}
+        {{ form_errors(form) }}
+     {{ form_end(form, {'render_rest': false}) }}
+    
+
+    <script>
+        let timeoutId;
+        let countdownInterval;
+
+        // Initialisation du délai de la partie
+        let delay = {{ dureeNotation }}; 
+        delayMilli = delay * 1000; //Pour l'avoir en millisecondes
+        const compteARebour = document.getElementById('idCompteARebour');
+        
+        // Mise à jour du compte à rebours chaque seconde
+        countdownInterval = setInterval(() => {
+            delay--;
+            compteARebour.textContent = `Fin dans: ${delay} sec...`;
+
+            if (delay <= 0) {
+                clearInterval(countdownInterval); // Arrête le minuteur
+            }
+        }, 1000);
+
+
+        // Soumission automatique après la fin de la notation
+        timeoutId = setTimeout(() => {
+            const form = document.getElementById('auto-submit-form');
+            
+            //Pour mise à jour futur, si le joueur n'a pas tout noté, on pourrait lui enlever 1 point (champ caché analysé par le contrôleur).
+            form.submit();
+           
+        }, delayMilli); 
+
+        console.log("Timeout initialisé: " + timeoutId);
+
+        //Actualise la durée restante si le focus de la page a été perdu puis retrouvé (page réduite sur téléphone...)
+        window.addEventListener("focus", demandeInfosSurpartieAuBackend);             /*Si l'onglet retrouve le focus*/
+
+
+        //Ajout de la note au-dessus de chaque slider
+        document.addEventListener('DOMContentLoaded', function () {
+            const rangeContainers = document.querySelectorAll('.range-container');
+
+            rangeContainers.forEach(container => {
+                const rangeSlider = container.querySelector('.range-slider');
+                const rangeValue = container.querySelector('.range-value');
+
+                rangeSlider.addEventListener('input', function () {
+                    rangeValue.textContent = rangeSlider.value;
+                });
+            });
+        });
+
+    </script>
+
+{% endblock %}

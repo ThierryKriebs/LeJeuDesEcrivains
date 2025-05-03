@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer une partie multijoueur{% endblock %}
+
+{% block importmap %}
+    <script src="{{ asset('appLancerPartie.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    {% include 'partie_multi/modal_annulerPartie.html.twig' %}
+   
+    <input type="hidden" id="hidden_url_liste_joueurs" value= {{ url("app_partie-multi_liste_joueurs") }}/{{ partie.id }}  /> {#{{ partie.id }} #}
+    <input type="hidden" id="hidden_etat_partie" value= {{ url("app_partie-multi_etat") }}/{{ partie.id }}  /> {#{{ partie.id }} #}
+    <input type="hidden" id="hidden_url_jeu" value= {{ url("app_jouer_multi__jouer",{ codeConnexion:  partie.code_connexion } )  }}  />
+    
+
+    <span class="demarrage_messageBienvenue">Bienvenue sur la partie: </span> <span class="lancer_partie_mulitijoueur__codeConnexion"> {{ partie.code_connexion }} </span>
+
+    <BR>
+    <BR>
+
+    <div id="corpsPageLancerPartie">
+        {# Si la partie est dans l'état annulé: #}
+        {% if etat_partie.id == code_partie_abondonnee %}
+            Désolé, la partie a été annulée. Pour lancer vous-même une partie, allez dans le menu général et cliquez sur: Créer/lancer une partie multijoueur
+
+        {# Si la partie est dans l'état: en cours de connexion #}
+        {% else %}
+            <div>
+                <span class="titre">Pour inviter des gens:</span>
+                
+                <table class="table lancer_partie_mulitijoueur__tableau_lien">
+                    <tr>
+                        <td colspan=3 class="ligne_communication_lien">
+                            <li>Communiquez leur simplement ce lien: </li> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="cellule_lien_et_code">
+                            <a href="{{ url("app_partie-multi_rejoindre",{ codeConnexion:  partie.code_connexion  } )  }}" id="adrACopier"> {{ url("app_partie-multi_rejoindre",{ codeConnexion:  partie.code_connexion  } ) }}</a>
+                        </td>
+
+                        <td class="cellule_boutonCopier">
+                            <button class="boutonCopier" onclick="copierPressePapier()"> <i class="fa-regular fa-copy"></i></button>
+                        </td>
+                        
+                        <td>
+                            <label id="TextElCopie" class="cellule_infoCopie"></label>
+                        </td>
+                    <tr>
+                        <td colspan=3 class="ligne_communication_lien">
+                            <li>Ou ce code de connexion: </li> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="lancer_partie_mulitijoueur__codeConnexionPetit" id="codeACopier">{{ partie.code_connexion  }}</span>
+                            
+                        </td>
+                        
+                        <td class="cellule_boutonCopier">
+                            <button class="boutonCopier" onclick="copierPressePapier('codeACopier', 'TextElCopie2', 'innerText')"> <i class="fa-regular fa-copy"></i></button>
+                        </td>
+                        
+                        <td>
+                            <label id="TextElCopie2" class="cellule_infoCopie"></label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <BR>
+            
+            <div class="titre">
+                Liste des joueurs déjà connectés:
+            </div>
+            
+            <div id="idListeJoueur">
+                {#Fait désormais avec un script Javascript #}
+            </div>
+
+            <button onclick="rafraichirTableauListeJoueurs()" class="btn btn-secondary center-block btn-sm">Rafraichir</button>
+            <BR>
+            <BR> 
+            <BR>
+
+            {% if estCreateur %}
+                <a href="{{ path('app_jouer_multi__demarrer', { codeConnexion:  partie.code_connexion  } ) }}" class="btn btn-primary center-block btn-sm">Lancer la partie</a>
+                
+                <button type="button" class="btn btn-danger center-block btn-sm" 
+                    data-bs-toggle="modal" data-bs-target="#idModalAnnulerPartie"
+                    data-titre = "Confirmation d'annulation de partie" 
+                    data-question = "Etes-vous sûr de vouloir annuler la partie ayant pour code: << {{ partie.code_connexion }} >> ?" 
+                    data-route = {{ path('app_partie-multi_annuler', { codeConnexion:  partie.code_connexion  } ) }} >
+                    Annuler la partie
+                </button>
+
+            {% else %}
+                <p>Veuillez patienter, le créateur de la partie va lancer la partie d'ici quelques minutes</p>
+                
+                <button type="button" class="btn btn-danger center-block btn-sm" 
+                    data-bs-toggle="modal" data-bs-target="#idModalAnnulerPartie"
+                    data-titre = "Confirmation d'annulation de participation" 
+                    data-question = "Etes-vous sûr de vouloir annuler votre participation à la partie: <BR><< {{ partie.code_connexion }} >> ?" 
+                    data-route = {{ path('app_partie-multi_annuler-participation', { codeConnexion:  partie.code_connexion  } ) }} >
+                    Annuler ma participation
+                </button>
+            {% endif %}
+        {% endif %}
+    </div>
+    
+    <script>
+        const codePartieEnCours = {{ code_partie_en_cours }}
+        const codePartieTerminee = {{ code_partie_terminee }}
+        const codePartieEnCoursDeConnexion = {{ code_partie_en_cours_de_connexion }}
+        const codePartieAbandonnee = {{ code_partie_abondonnee }}
+        const codeConnexion = "{{ partie.code_connexion }}"
+        
+        rafraichirElementsPages(codePartieEnCours, codePartieTerminee, codePartieEnCoursDeConnexion, codePartieAbandonnee,codeConnexion)
+        var rafraichissementElementsPage = setInterval(rafraichirElementsPages, 5000, codePartieEnCours, codePartieTerminee, codePartieEnCoursDeConnexion, codePartieAbandonnee, codeConnexion);
+        
+    </script>
+{% endblock %}

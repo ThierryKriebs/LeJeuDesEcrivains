@@ -1,0 +1,43 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+parameters:
+    CONST_GENRE_LITT_PAR_DEFAUT: '%env(CONST_GENRE_LITT_PAR_DEFAUT)%'
+    
+    CONST_NOM_LONGUEUR_PARTIE_PAR_DEFAUT: '%env(CONST_NOM_LONGUEUR_PARTIE_PAR_DEFAUT)%'
+
+    CONST_ETAT_PARTIE__EN_COURS: '%env(CONST_ETAT_PARTIE__EN_COURS)%'
+    CONST_ETAT_PARTIE__TERMINEE: '%env(CONST_ETAT_PARTIE__TERMINEE)%'
+    CONST_ETAT_PARTIE__EN_COURS_DE_CONNEXION: '%env(CONST_ETAT_PARTIE__EN_COURS_DE_CONNEXION)%'
+    CONST_ETAT_PARTIE__ABANDONNEE: '%env(CONST_ETAT_PARTIE__ABANDONNEE)%'
+
+    CONST_ETAT_EPREUVE__VA_DEMARRER: '%env(CONST_ETAT_EPREUVE__VA_DEMARRER)%'
+    CONST_ETAT_EPREUVE__EN_COURS: '%env(CONST_ETAT_EPREUVE__EN_COURS)%'
+    CONST_ETAT_EPREUVE__NOTATION_VA_DEMARRER: '%env(CONST_ETAT_EPREUVE__NOTATION_VA_DEMARRER)%'
+    CONST_ETAT_EPREUVE__NOTATION_DEMARREE: '%env(CONST_ETAT_EPREUVE__NOTATION_DEMARREE)%'
+    CONST_ETAT_EPREUVE__ABANDONNEE: '%env(CONST_ETAT_EPREUVE__ABANDONNEE)%'
+    CONST_ETAT_EPREUVE__NOTATION_TERMINEE: '%env(CONST_ETAT_EPREUVE__NOTATION_TERMINEE)%'
+
+    DUREE_TRANSITION:  '%env(DUREE_TRANSITION)%'
+    DUREE_AVANT_RAFRAICHISSEMENT_INFO_SALLE_ATTENTE: '%env(DUREE_AVANT_RAFRAICHISSEMENT_INFO_SALLE_ATTENTE)%'
+
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones

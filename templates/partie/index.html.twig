@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Partie index{% endblock %}
+
+{% block body %}
+    <h1>Partie index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Code_connexion</th>
+                <th>Date_creation</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for partie in parties %}
+            <tr>
+                <td>{{ partie.id }}</td>
+                <td>{{ partie.codeConnexion }}</td>
+                <td>{{ partie.dateCreation ? partie.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_partie_show', {'id': partie.id}) }}">show</a>
+                    <a href="{{ path('app_partie_edit', {'id': partie.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_partie_new') }}">Create new</a>
+{% endblock %}

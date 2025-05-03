@@ -1,0 +1,14 @@
+
+<h1>Message du site: Le jeu des écrivains</h1>
+<h2>Bonjour, nous vous remerçions pour la création de votre compte</h2>
+<h3>Merci de bien vouloir confirmer votre adresse email.</h3>
+
+<p>
+    S'il vous plaît, confirmez votre adresse email en cliquant sur le lien ci-dessous: <br><br>
+    <a href="{{ signedUrl|raw }}">Lien de confirmation</a>.
+    Ce lien expirera dans {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
+</p>
+
+<p>
+    Merci beaucoup!
+</p>

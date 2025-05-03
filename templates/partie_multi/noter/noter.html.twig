@@ -1,0 +1,18 @@
+
+{#PLUS UTILISE!!!!!#}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+   
+    <BR>
+    <strong>Redaction:</strong> {{ redaction }}
+
+    {{ form_start(form, {'attr': {'id': 'auto-submit-form'} } ) }}
+        {{form_widget(form.note) }} 
+        <BR>
+        {{form_widget(form.remarque) }}
+
+        <BR>
+    {{ form_end(form, {'render_rest': true}) }}
+
+{% endblock %}

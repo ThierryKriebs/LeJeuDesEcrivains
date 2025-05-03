@@ -1,0 +1,45 @@
+
+  <!-- Modal -->
+  <div class="modal fade" id="idModalAnnulerPartie" tabindex="-1" role="dialog" aria-labelledby="ModalAnnulerPartie" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="idModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Texte d'exemple
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="button_oui" class="btn btn-primary">Oui</button>
+          <button type="button" id="button_non" class="btn btn-primary" data-bs-dismiss="modal">Non</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {  //Attend la fin du chargement du DOM
+    var modal = document.getElementById("idModalAnnulerPartie");
+    modal.addEventListener("show.bs.modal", function (event) {   //Evènement avant apparition de la modale
+      var button = event.relatedTarget;                          //Bouton qui a déclenché la modale
+      var title = button.getAttribute("data-titre");        
+      var question = button.getAttribute("data-question");  
+      var route = button.getAttribute("data-route");  
+
+      var modalTitle = modal.querySelector(".modal-title");
+      var modalBody = modal.querySelector(".modal-body");
+
+      modalTitle.textContent = title;                            //Injecte le titre dans la modale
+      modalBody.innerHTML = question;                            //Injecte le contenu dans la modale 
+
+      var bouttonOui = document.getElementById('button_oui')
+
+      bouttonOui.addEventListener('click', function () {
+          //Appel de la route annuler en lui passant les paramètres  path('app_partie-multi_annuler', { codeConnexion:  partie.code_connexion  }
+          window.location.href = route 
+      }) 
+    });
+  });
+</script>

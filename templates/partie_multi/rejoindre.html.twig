@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Rejoindre une partie multijoueur{% endblock %}
+
+{% block body %}
+    {# Pour la gestion des fenêtres modales #}
+    {% include 'partie_multi/partials/modal.html.twig' %}
+    {% include 'partie_multi/partials/modal_img.html.twig' %}
+
+<BR>
+<BR>
+    {% if partieARejoindre is not defined %}
+        <div class="rejoindre_une_partie_multi__div_Principal">
+            <h1 class="h3 mb-3 font-weight-normal">Rejoindre une partie: </h1> 
+            <BR><BR>
+
+            <div class="rejoindre_une_partie_multi__div_formulaire">
+                <label for="id_code_connexion">Code de connexion:</label>
+                <input type="text" id="id_code_connexion" class="form-control mb-3 " name="code_connexion" required minlength="19" maxlength="19" size="19" />
+                <input type="hidden" id="id_chemin" value="{{ url('app_partie-multi_rejoindre', { codeConnexion: 100  }) }}">
+            </div>
+            
+            <a href="#" id='id_lien' class="btn btn-primary">Information sur la partie</a>    
+        </div>
+
+        <script>
+             document.getElementById('id_code_connexion').addEventListener('input', ()=>{
+                 var inputValue = document.getElementById('id_code_connexion').value;
+                 console.log(inputValue) ;
+                 var lien = document.getElementById("id_lien");
+                 var chemin = document.getElementById("id_chemin").value;
+                 chemin = chemin.slice(0, chemin.length-3);                 //enlève le codeConnexion initial=>100 dans la variable chemin
+                 lien.href= chemin + encodeURIComponent(inputValue);        //insère le code de connexion saisie par l'utilisateur dans le bouton "Information sur la partie"
+            })
+        </script>
+
+
+    {% else %}    
+        <div class="rejoindre_une_partie_multi__div_Principal">
+            <h1 class="h3 mb-3 font-weight-normal">Rejoindre la partie: &nbsp;</h1> 
+            <span class="rejoindre_une_partie_multi__codeConnexion"> {{partieARejoindre.codeConnexion}} </span>
+            
+            <BR><BR> 
+            <div class="rejoindre_une_partie_multi__div_formulaire">
+                <table class="table rejoindre_une_partie_multi__table">
+                    <tbody>
+                        <tr>
+                            <th>Créateur:</th> 
+
+                            <td class="rejoindre_nom" colspan="2"> 
+                                {{ createur }} 
+                            </td> 
+                        </tr>
+                        <tr>
+                            <th>Genre littéraire:</th>    
+                            
+                                <td class="rejoindre_nom" > 
+                                    {{ genreLitt.nom }} 
+                                    <BR>
+                                    <button type="button" class="btn btn-secondary center-block btn-sm" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#idExplicationGenreLitteraire"
+                                        data-title="Explication du genre: {{ genreLitt.nom }}" data-content="{{ genreLitt.Commentaire|raw }}">
+                                        Détails
+                                    </button>
+                                </td> 
+
+                                <td class="rejoindre_illustration"> 
+                                    <input type="image" class="bouton_image" id="modalImage" alt="Image" src="/images/genres_litteraires/{{ genreLitt.nom_image }}" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#imageModal" 
+                                        data-image-titre="Illustration du genre: {{ genreLitt.nom }}"
+                                        data-image="/images/genres_litteraires/{{ genreLitt.nom_image }}">
+                                    <br>
+                                </td>
+                        </tr>
+                        <tr>
+                            <th>Durée:</th> 
+                                <td colspan="2"> 
+                                    {% if longueurPartie.nombreEtape > nbreEpreuveDansTableSCategorie %}
+                                        {{ longueurPartie.nom }} => {{ nbreEpreuveDansTableSCategorie }} 
+                                    {% else %}
+                                        {{ longueurPartie.nom }} => {{ longueurPartie.nombreEtape }} étapes 
+                                    {% endif %}
+                                </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+                    
+            <a href="{{ path('app_partie-multi_lancer', { codeConnexion:   partieARejoindre.codeConnexion  } ) }}" class="btn btn-primary center-block btn-sm">Rejoindre</a>
+        </div>
+    {% endif %}
+<BR>
+<BR>
+<BR>
+{% endblock %}

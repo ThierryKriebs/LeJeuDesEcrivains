@@ -1,0 +1,140 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Salle d'attente{% endblock %}
+
+{% block importmap %}
+    
+{% endblock %}
+
+{% block body %}
+    {% include 'partie_multi/jouer/modals_fin/modal_fin.html.twig' %}
+
+    <div>
+        <h1>La partie : <span class= "classement_code">{{ codeConnexion }} </span> est terminée!</h1>
+        <BR>
+        {{ messagefin }}
+        <BR>
+        <BR>
+        <BR>
+        <h2>Classement final:</h2>
+      
+        <div class="classement_final">
+            <table class="table epreuve">
+                <tbody>
+                    <tr>
+                        <th>Joueur</th><th>Score</th><th>Classement</th>
+                    </tr>
+                        {% for classement in classementFinal %}
+                            <tr>
+                                <td>
+                                    {{ classement.login }}
+                                </td>
+                                <td>
+                                    {{ classement.score }}
+                                </td>
+                                <td>
+                                    {{ classement.classement }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <BR>
+        <BR> 
+        <h2>Classement par épreuve:</h2>
+        <div class="classement_par_epreuve">
+        
+            {% set oldClassement = 0 %}
+          
+            {% for classement in classementParEpreuvre %}
+                
+                {% if classement.num_etape != oldClassement %}
+                    {% if oldClassement > 0 %}
+                        </tbody>
+	                    </table>
+                        <BR>
+                        <BR>
+                    {% endif %}
+                     
+                    <span class= "classement_epreuve"> Epreuve numéro: </span>{{ classement.num_etape }} 
+                    <BR>
+                    <span class= "classement_butEpreuve"> But: </span> {{ classement.explication }}
+                    <table class="table epreuve">
+                        <tbody>
+                            <tr>
+                               <th>Joueur</th><th>Redaction</th><th>Score</th><th>Classement</th>
+                            </tr>
+                            <tr>
+                    {% set oldClassement  = classement.num_etape %} 
+                {% endif %}
+
+                <td>
+                    {{ classement.login }}
+                </td>
+                
+                <td>
+                    <button type="button" class="btn btn-secondary center-block btn-sm" 
+                       data-bs-toggle="modal" data-bs-target="#idClassement"
+                       data-title="Redaction de {{ classement.login }}" 
+                       data-content="
+                                {% if classement.redaction == '' %}
+                                    Le joueur n'a pas réalisé l'exercice!  
+                                {% else %}
+                                    {{ classement.redaction|raw }} 
+                                {% endif %}
+
+                                    <BR>
+                                    <BR>
+
+                                    <table class= 'table epreuve'>
+                                        
+                                        <tbody>
+                                            <tr>
+                                                <th>
+                                                    Noteur(s)
+                                                </th>
+                                                <th>
+                                                    Note(s)
+                                                </th>
+                                                <th>
+                                                    Remarque(s)
+                                                </th>
+                                            </tr>
+                                                 {% for cle,valeur in classement.liste_notes %}
+                                                 <tr>
+                                                    <td>
+                                                        {{ cle }}
+                                                    </td>
+                                                    <td>
+                                                        {{ valeur }}
+                                                    </td>
+                                                    <td>
+                                                        {{ classement.liste_remarques[cle] }}
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                        </tbody>
+                                    </table> 
+                                ">
+                       Détails
+                    </button>
+                </td>
+                
+                <td>
+                    {{ classement.score }}
+                </td>
+
+                <td>
+                    {{ classement.classement }}
+                </td>
+                
+                </tr>
+            {% endfor %}
+           	</tbody>
+	      </table>
+          <BR> 
+          <BR>
+    </div>
+{% endblock %}

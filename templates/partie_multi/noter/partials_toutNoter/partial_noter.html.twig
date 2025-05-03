@@ -1,0 +1,36 @@
+
+{# Affiche des informations sur la partie enc ours (genre littéraire, durée...) #}
+<table class="table toutNoter_table">
+		    <tbody>
+                <tr>
+                    <th class="toutNoter_th">Genre littéraire:</th>    
+                    
+                        <td class="toutNoter_nom" > 
+                            {{ genreLitteraire }} 
+                            <BR>
+                        </td> 
+
+                        <td class="toutNoter_illustration"> 
+                            <img class="bouton_image" src="/images/genres_litteraires/{{ imageGenreLitteraire }}" />
+                            <br>
+                        </td>
+                </tr>
+                <tr>
+                        <th class="toutNoter_th">Explication:</th>  
+                        <td class="toutNoter_explication" colspan="2">
+                            {{ explicationGenreLitteraire|raw }}
+                        </td>
+                </tr>
+                <tr>
+                    <th class="toutNoter_th" >Durée:</th> 
+                        <td colspan="2"> 
+                            {% if nbreEpreuveDeLaPartie > nbreEpreuveDansTableSCategorie %}
+                                {{ nbreEpreuveTotalNom }} => {{ nbreEpreuveDansTableSCategorie }} 
+                            {% else %}
+                                {{ nbreEpreuveTotalNom }} => {{ nbreEpreuveDeLaPartie }} étapes 
+                            {% endif %}
+                            
+                        </td>
+                </tr>
+            </tbody>
+		</table>

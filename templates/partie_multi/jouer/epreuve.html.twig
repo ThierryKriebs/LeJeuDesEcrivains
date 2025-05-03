@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Début du jeu{% endblock %}
+
+
+{% block importmap %}
+    <script src="{{ asset('appJouer.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    {# Modales communes à plusieurs Twig #}
+    {% include 'partie_multi/partials/modal.html.twig' %}
+    {% include 'partie_multi/partials/modal_img.html.twig' %}
+    
+    {# Partial et modale spécifique à Epreuve #}
+    {% set varInfoSurPartie  %}
+        {% include 'partie_multi/jouer/partials_epreuves/partial_epreuve.html.twig' %}
+    {% endset %}
+
+    {% include 'partie_multi/jouer/partials_epreuves/modal_epreuve.html.twig' %}
+    
+    {% set typeInfo = 'epreuve' %}
+
+    <input type="hidden" id="hidden_url_epreuve_duree_restante" value= {{ url("app_jouer_multi__envoi_info_frontend", {
+                idPartie: partieId,
+                typeInfo: typeInfo,
+                numeroEpreuve: numeroEpreuve,
+                epreuveEtat: epreuveEtat,
+                codeConnexion: codeConnexion,
+                FlagRedacsTerminees: FlagRedacsTerminees,
+                FlagNotationsTerminees: FlagNotationsTerminees
+    }) |e('url') }}/> 
+   
+    <div>
+        <h2>Partie: {{ codeConnexion }}</h2>
+                
+        <button type="button" class="btn btn-secondary center-block btn-sm" 
+            data-bs-toggle="modal" 
+            data-bs-target="#EpreuveModale"
+            data-title="Explication">
+            Informations sur la partie
+        </button>
+
+        <BR>
+        <BR>
+        <h4>Epreuve numéro: {{ numeroEpreuve }}</h4>
+
+        <div id="divIdCompteARebourEpreuve" >
+            <p id="idCompteARebourEpreuve">Fin dans: {{  dureeRestante }} sec...</p>
+        </div>
+        
+        <div><bold> {{ descriptionEpreuve }} : </bold></div>
+        
+         {{ form_start(form, {'attr': {'id': 'auto-submit-form'} } ) }}
+            {{form_widget(form.redaction) }} 
+            <BR>
+            {{ form_row(form.Envoyer, { 'label': 'Envoyer' }) }}
+            {{ form_row(form._token)}} 
+
+        {{ form_end(form, {'render_rest': false}) }}
+
+
+    </div>
+    <script>
+        let timeoutId;
+        let countdownInterval;
+
+        // Initialisation du délai de la partie
+        let delay = {{ dureeRestante }}; 
+        delayMilli = delay * 1000;                  //Pour l'avoir en millisecondes
+        console.log("Le formulaire sera soumis après: " + delayMilli);
+        const compteARebour = document.getElementById('idCompteARebourEpreuve');
+        
+        // Mise à jour du compte à rebours chaque seconde
+        countdownInterval = setInterval(() => {
+            delay--;
+            compteARebour.textContent = `Fin dans: ${delay} sec...`;
+
+            if (delay <= 0) {
+                clearInterval(countdownInterval);   // Arrête le minuteur
+            }
+        }, 1000);
+
+
+        // Soumission automatique après la fin de l'épreuve
+        timeoutId = setTimeout(() => {
+            const form = document.getElementById('auto-submit-form');
+            console.log("Soumission du formulaire!");
+            form.submit();
+           
+        }, delayMilli);
+
+        //Actualise les infos dont la durée restante si le focus de la page a été perdu puis retrouvé (page réduite sur téléphone...)
+        window.addEventListener("focus", demandeInfosSurpartieAuBackend);             /*Si l'onglet retrouve le focus*/
+    </script>
+{% endblock %}

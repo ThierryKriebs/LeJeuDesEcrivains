@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Salle d'attente{% endblock %}
+
+{% block importmap %}
+    <script src="{{ asset('appJouer.js') }}"></script>
+
+{% endblock %}
+
+{% block body %}
+     {% set typeInfo = typeAttente %}
+
+    <input type="hidden" id="hidden_url_epreuve_duree_restante" value= {{ url("app_jouer_multi__envoi_info_frontend", {
+                idPartie: partieId|e('url'),
+                typeInfo: typeInfo|e('url'),
+                numeroEpreuve: numeroEpreuve|e('url'),
+                epreuveEtat: epreuveEtat|e('url'),
+                codeConnexion: codeConnexion|e('url'),
+                FlagRedacsTerminees: FlagRedacsTerminees|e('url'),
+                FlagNotationsTerminees: FlagNotationsTerminees|e('url')
+    }) |e('url') }}/> 
+
+    <div>
+        <span class="salleAttente_messageBienvenue">Salle d'attente de la partie: </span> <span class="salleAttente_codeConnexion"> {{ codeConnexion  }} </span>
+        <BR>
+        <BR>
+        {{ messageAttente }}
+        <BR>
+        <BR>
+        <p id="idCompteARebour">
+            {% if messagedureeAPatienter is defined %}
+                {{ messagedureeAPatienter|raw }} <strong> {{ dureeRestante }} </strong> secondes 
+            {% endif %}
+        </p>
+    </div>
+
+    <div id ="url_jeu">
+       <input type="hidden" id="hidden_url_jeu" value= {{ url("app_jouer_multi__jouer",{ codeConnexion:  'A_REMPLACER'  } )  }}  />
+    </div>
+
+
+    <div id="monCarousel" class="carousel slide my-3 " data-bs-ride="carousel">
+            <div class="carousel-inner">
+                {% for image in imagesCarroussel %}
+                
+                    {% if loop.index == 1 %}
+                        <div class="carousel-item active">
+                            <img class="d-block w-100" src="{{ asset(image) }}" alt="img {{ loop.index}}"> 
+                            
+                        </div>
+                    {% else %}
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="{{ asset(image) }}" alt="img {{ loop.index}}">
+                            
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <a class="carousel-control-next" href="#monCarousel" role="button" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Suivant</span>
+            </a>
+
+            <a class="carousel-control-prev" href="#monCarousel" role="button" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Précédent</span>
+            </a>
+    </div>
+ 
+     <script>
+      
+        //Rafraichissement des informations en contactant de backend
+        const codeConnexion = "{{ codeConnexion }}"
+                
+        let delay = {{ dureeRestante }}; 
+        delayMilli = delay * 1000; //Pour l'avoir en millisecondes
+        
+        // Initialisation du compte à rebour
+        const compteARebour = document.getElementById('idCompteARebour');
+        
+        // Mise à jour du compte à rebours chaque seconde
+        countdownInterval = setInterval(() => {
+           
+            if (delay > 0)
+            {
+                delay--;
+            }
+            
+            compteARebour.innerHTML = `{{ messagedureeAPatienter|raw }} <strong> ${delay} </strong> secondes`
+           
+            if (delay <= 0) {
+                clearInterval(countdownInterval); // Arrête le minuteur
+            }
+        }, 1000);
+
+        // Soumission automatique après la fin de l'épreuve
+        timeoutId = setTimeout(() => {
+           redirigersurRouteJouer(codeConnexion) 
+           
+        }, delayMilli); 
+
+        //Actualise les infos dont la durée restante si le focus de la page a été perdu puis retrouvé (page réduite sur téléphone...)
+        window.addEventListener("focus", demandeInfosSurpartieAuBackend);             /*Si l'onglet retrouve le focus*/
+
+        //Actualisation régulière des informations
+        let delaisAvantRafraichissementInfos = {{ dureeAvantRafraichissement }} * 1000
+        let rafraichissementInfo = setInterval(demandeInfosSurpartieAuBackend, delaisAvantRafraichissementInfos);
+
+    </script>
+{% endblock %}

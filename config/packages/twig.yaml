@@ -1,0 +1,12 @@
+twig:
+    file_name_pattern: '*.twig'
+    form_themes: ['bootstrap_5_layout.html.twig']
+    
+    globals:
+        #Indiquer ici les constantes de .env pouvant être utilisées par les fichiers Twig. ex:
+        #CONST_MA_CONSTANTE: '%env(CONST_MA_CONSTANTE)%'
+   
+
+when@test:
+    twig:
+        strict_variables: true

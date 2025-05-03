@@ -1,0 +1,35 @@
+
+{# Affiche des informations sur la partie en cours (genre littéraire, durée...) #}
+<table class="table epreuve_table">
+		    <tbody>
+                <tr>
+                    <th class="epreuve_th">Genre littéraire:</th>    
+                    
+                        <td class="epreuve_nom" > 
+                            {{ genreLitteraire }} 
+                            <BR>
+                        </td> 
+
+                        <td class="epreuve_illustration"> 
+                            <img class="bouton_image" src="/images/genres_litteraires/{{ imageGenreLitteraire }}" />
+                            <br>
+                        </td>
+                </tr>
+                <tr>
+                        <th class="epreuve_th">Explication:</th>  
+                        <td class="epreuve_explication" colspan="2">
+                            {{ explicationGenreLitteraire|raw }}
+                        </td>
+                </tr>
+                <tr>
+                    <th class="epreuve_th" >Durée:</th> 
+                        <td colspan="2"> 
+                            {% if nbreEpreuveDeLaPartie > nbreEpreuveDansTableSCategorie %}
+                                {{ nbreEpreuveTotalNom }} => {{ nbreEpreuveDansTableSCategorie }} 
+                            {% else %}
+                                {{ nbreEpreuveTotalNom }} => {{ nbreEpreuveDeLaPartie }} étapes 
+                            {% endif %}
+                        </td>
+                </tr>
+            </tbody>
+		</table>

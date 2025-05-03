@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer une partie multijoueur{% endblock %}
+
+{% block body %}
+   {% include 'partie_multi/partials/modal.html.twig' %}
+   {% include 'partie_multi/partials/modal_img.html.twig' %}
+
+
+{%set radio_checked = '' %}
+<div >
+    <h1>Créer une partie multijoueur</h1>
+
+    {{ form_start(form) }}
+         <BR>
+         <div class="titre">
+            {{form_label(form.longueur_partie) }}
+         </div>
+         {{form_widget(form.longueur_partie) }}
+         {{ form_help(form.longueur_partie) }}
+ 
+         <BR>
+          <div class="titre">
+            {{form_label(form.genre_litteraire) }}
+          </div>  
+          <div class="form-check m-0 p-0">
+            <table class="table creer-partie__table">
+              <tbody>
+                <tr>
+                  <th>Genre</th> <th>Explication</th> <th class="col_exemple">Exemple(s)</th> <th>Illustration</th>
+
+                  {% for genre in listeGenreLitteraire %}
+
+                    <tr>
+                    <td class="col_genre">
+                      {%  if genre.id == genreLitteraireParDefaut.id %}
+                        <input type="radio" id="genre_litteraire_{{genre.id}}" name="creer_partie[genre_litteraire]" checked required="required" class="radiobutton" value="{{ genre.id }}">
+                      {% else %}
+                        <input type="radio" id="genre_litteraire_{{genre.id}}" name="creer_partie[genre_litteraire]" required="required" class="radiobutton" value="{{ genre.id }}">
+                      {% endif %}
+                
+                      {{ genre.nom }}
+                    </td>
+
+                    <td class="col_explication">
+                      <button type="button" class="btn btn-secondary center-block  btn-sm" 
+                          data-bs-toggle="modal" data-bs-target="#idExplicationGenreLitteraire"
+                          data-title="Explication du genre: {{ genre.nom }}" 
+                          data-content="{{ genre.Commentaire|raw }}"
+                          data-exemple="{{ genre.exemple }}">
+                          Détails
+                      </button>
+                    </td>
+
+                    <td class="col_exemple">
+                      {{ genre.exemple|raw }}
+                    </td>
+
+                    <td class="col_illustration">
+                      <button type="button" class="creer-partie__btn-modal-image" 
+                        data-bs-toggle="modal" data-bs-target="#imageModal"
+                        data-image-titre="Illustration du genre: {{ genre.nom }}" data-image="../images/genres_litteraires/{{ genre.nom_image }}">
+                        <img src="../images/genres_litteraires/{{ genre.nom_image }}" alt="Image" class="img-fluid">
+                      </button>
+                    </td>
+                    </tr>
+                  {% endfor %}
+              </tbody>
+            </table>
+            {{ form_help(form.genre_litteraire) }}
+          </div>
+
+          {{ form_row(form._token)}}
+        
+          <BR>
+          {{ form_row(form.Creer, { 'label': 'Créer une partie' }) }}
+    {{ form_end(form, {'render_rest': false}) }} 
+     
+{% endblock %}
+

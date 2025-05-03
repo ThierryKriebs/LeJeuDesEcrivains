@@ -1,0 +1,43 @@
+  <!-- Modal -->
+  <div class="modal fade" id="idExplicationGenreLitteraire" tabindex="-1" role="dialog" aria-labelledby="ModalGenreLitteraire" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="idTitreModalExplicationGenreLitteraire">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Texte d'exemple
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fermer</button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {  //Attend la fin du chargement du DOM
+      var modal = document.getElementById("idExplicationGenreLitteraire");
+
+      modal.addEventListener("show.bs.modal", function (event) { //Evènement avant apparition de la modale
+          
+          var button = event.relatedTarget;                      //Bouton qui a déclenché la modale
+          var title = button.getAttribute("data-title");        
+          var content = button.getAttribute("data-content");    
+          var exemple = button.getAttribute("data-exemple");   
+
+          if (exemple != "") {
+            exemple = "<BR><BR> <div class='modalExplicationGenreLitteraire_exemples'>Exemple(s): </div>" + DOMPurify.sanitize(exemple); //purification du HTML avant injection
+          }
+
+          var modalTitle = modal.querySelector(".modal-title");
+          var modalBody = modal.querySelector(".modal-body");
+
+          modalTitle.textContent = title;                       //Injecte le titre dans la modale
+          modalBody.innerHTML = content + exemple;              //Injecte le contenu dans la modale 
+      });
+    });
+</script>

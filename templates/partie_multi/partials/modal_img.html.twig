@@ -1,0 +1,39 @@
+
+
+<!-- Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="idModalLabelImage">Image en grand format</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         
+      </div>
+      <div class="modal-body text-center">
+        <img id="idModalImage" src="" alt="Grande Image" class="img-fluid">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var modal = document.getElementById("imageModal");
+
+    modal.addEventListener("show.bs.modal", function (event) {
+        
+        var button = event.relatedTarget;         // Bouton qui a déclenché la modale
+        var imagetitle = button.getAttribute("data-image-titre"); 
+        var imageUrl = button.getAttribute("data-image"); 
+
+        var modalTitle = modal.querySelector("#idModalLabelImage");
+        var modalImage = modal.querySelector("#idModalImage");
+
+        modalTitle.textContent = imagetitle;      // Injecte le titre dans la modale
+        modalImage.setAttribute("src", imageUrl); // Injecte le contenu dans la modale
+    });
+});
+</script>
