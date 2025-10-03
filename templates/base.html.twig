@@ -1,18 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
-         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-         <meta name="viewport" content="width=device-width, initial-scale=1.0"> {# Pour les mobiles modernes (grande résolution, ajuste la largeur pour que ça reste lisible!)  #}
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> {# Pour les mobiles modernes (grande résolution, ajuste la largeur pour que ça reste lisible!)  #}
         <title>{% block title %}Le Jeu Des Ecrivains{% endblock %}</title>
+        
+        <!-- META DESCRIPTION (SEO) -->
+        <meta name="description" content="Défiez vos amis dans un jeu d'écriture collaboratif en ligne ! 
+        Créez des histoires à plusieurs, votez pour les meilleurs textes et gagnez des parties. Idéal pour les passionnés d'écriture.">
+
+        <!-- OPEN GRAPH (pour les réseaux sociaux) -->
+        <meta property="og:title" content="Le Jeu des Écrivains - Créez des histoires ensemble et votez pour le meilleur !">
+        <meta property="og:description" content="Un jeu littéraire en ligne où vous écrivez des récits à plusieurs, relevez des défis et votez pour élire le gagnant. Parfait pour s'amuser entre amis ou en famille !">
+        <meta property="og:url" content="https://lejeudesecrivains.fr">
+        <meta property="og:type" content="website">
+        <meta property="og:image" content="{{ asset('images/logos/Logo_JDE_ReseauxSociaux.png') }}">
+        
+        <meta property="og:locale" content="fr_FR">
+        <meta property="og:site_name" content="Le Jeu des Écrivains">
        
         {#bootstrap#}
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         
+        <!-- Font Awesome chargé de manière asyncrhone -->
         <script src="https://kit.fontawesome.com/99d6a7f372.js" crossorigin="anonymous"></script>
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.3/purify.min.js"></script> <!-- Suppression du code malveillant en HTML (pour modale modal.html.twig de crer.html.twig)-->
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.3/purify.min.js" defer></script> <!-- Suppression du code malveillant en HTML (pour modale modal.html.twig de crer.html.twig)-->
         
 
         {% block stylesheets %}
@@ -51,44 +66,38 @@
                 </div>
             </div>
         </main>
-      
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" 
-                integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
-        </script>
 
-    </body>
+        <footer class="border-top">
+            <div class="container py-5">
+                <div class="row gy-4 align-items-center">
+                    <div class="col-12 col-md-4">
+                        <a class="navbar-brand  footer-texte-logo" href="#">
+                            Le Jeu Des Ecrivains
+                        </a>
+                    </div>
 
-    <footer class="border-top">
-        <div class="container py-5">
-            <div class="row gy-4 align-items-center">
-                <div class="col-12 col-md-4">
-                    <a class="navbar-brand  footer-texte-logo" href="#">
-                        Le Jeu Des Ecrivains
-                    </a>
-                </div>
+                    <div class="col-12 col-md-4 text-md-center">
+                        <ul class="list-unstyled mb-0 ">
+                        
+                            <li class="navbar-brand">
+                                Réalisé par: 
+                                <span class="footer-texte-logo">Thierry Kriebs</span>
+                            </li>
+                        </ul>
+                    </div>
 
-                <div class="col-12 col-md-4 text-md-center">
-                    <ul class="list-unstyled mb-0 ">
-                       
-                        <li class="navbar-brand">
-                            Réalisé par: 
-                            <span class="footer-texte-logo">Thierry Kriebs</span>
-                        </li>
-                    </ul>
-                </div>
-
-                 <div class="col-12 col-md-4 text-md-center">
-                    <ul class="list-unstyled mb-0 ">
-                        <li>
-                            <a href="#" class="text-decoration-none footer-texte " data-bs-toggle="modal" data-bs-target="#ModalMensionLegale" >Mentions légales</a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-decoration-none footer-texte " data-bs-toggle="modal" data-bs-target="#ModalReglesDuJeu" >Règles du jeu</a>
-                        </li>
-                    </ul>
+                    <div class="col-12 col-md-4 text-md-center">
+                        <ul class="list-unstyled mb-0 ">
+                            <li>
+                                <a href="#" class="text-decoration-none footer-texte " data-bs-toggle="modal" data-bs-target="#ModalMensionLegale" >Mentions légales</a>
+                            </li>
+                            <li>
+                                <a href="#" class="text-decoration-none footer-texte " data-bs-toggle="modal" data-bs-target="#ModalReglesDuJeu" >Règles du jeu</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
 
         <!-- Modal -->
         <div class="modal fade" id="ModalMensionLegale" tabindex="-1" aria-labelledby="ModalMensionLegale" aria-hidden="true">
@@ -138,5 +147,10 @@
                 </div>
             </div>
         </div>
-    </footer>
+        </footer>
+      
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" 
+                integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
+        </script>
+    </body>
 </html>

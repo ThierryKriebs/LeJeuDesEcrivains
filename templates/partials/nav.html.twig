@@ -17,38 +17,36 @@
 
             {# {% if is_granted('IS_AUTHENTICATED_FULLY') %} #}  {#Ne gère pas le cookie Remember l'utilisateur doit donc avoir entré son mdp récemment!#}
             {% if app.user %}
+               
                 <ul class="navbar-nav  ">
-
-                    <div class="d-flex flex-column  align-items-start    flex-lg-row  align-items-lg-center">
-                    
-                        {% if is_granted('ROLE_ADMIN') %}
-                            <li class="nav-item">
-                                <a class="nav-link  {{ app.current_route starts with 'admin' ? 'active' : '' }}" href="{{ path('admin') }}"> Administration</a> <!--text-white-->
-                            </li>
-                        {% endif %}
-            
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_partie-multi_creer') }}">{{ 'Créer/lancer une partie multijoueur' | trans }}</a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item d-flex flex-column  align-items-start    flex-lg-row  align-items-lg-center">
+                            <a class="nav-link  {{ app.current_route starts with 'admin' ? 'active' : '' }}" href="{{ path('admin') }}"> Administration</a> <!--text-white-->
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_partie-multi_rejoindre') }}">{{ 'Rejoindre une partie multijoueur' | trans }}</a>
-                        </li>
-            
-            
-                        <li class="nav-item dropdown  pt-5 pt-lg-0 ">
-                            <a class="nav-link dropdown-toggle d-flex flex-row align-items-end" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> {#Pour l'icône flèche #}
-                                <div class="d-flex flex-column justify-content-center align-items-center">
-                                    <i class="fa-solid fa-user fa-2x fa-lg-3x"></i>
-                                    {{ app.user.login }} 
-                                </div>
-                            </a>
-                            
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item text-center" href="{{ path('app_logout') }}">{{ 'Déconnexion' | trans }}</a></li>
-                            </ul>
-                        </li>
-                    </div>
+                    {% endif %}
+        
+                    <li class="nav-item d-flex flex-column  align-items-start    flex-lg-row  align-items-lg-center">
+                        <a class="nav-link" href="{{ path('app_partie-multi_creer') }}">{{ 'Créer/lancer une partie multijoueur' | trans }}</a>
+                    </li>
+                    <li class="nav-item d-flex flex-column  align-items-start    flex-lg-row  align-items-lg-center">
+                        <a class="nav-link" href="{{ path('app_partie-multi_rejoindre') }}">{{ 'Rejoindre une partie multijoueur' | trans }}</a>
+                    </li>
+        
+        
+                    <li class="nav-item dropdown  pt-5 pt-lg-0 d-flex flex-column  align-items-start    flex-lg-row  align-items-lg-center">
+                        <a class="nav-link dropdown-toggle d-flex flex-row align-items-end" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> {#Pour l'icône flèche #}
+                            <div class="d-flex flex-column justify-content-center align-items-center">
+                                <i class="fa-solid fa-user fa-2x fa-lg-3x"></i>
+                                {{ app.user.login }} 
+                            </div>
+                        </a>
+                        
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item text-center" href="{{ path('app_logout') }}">{{ 'Déconnexion' | trans }}</a></li>
+                        </ul>
+                    </li>
                 </ul>
+               
 
             {% else %}
                 <ul class="navbar-nav d-flex flex-column align-items-start flex-lg-row align-items-lg-center">

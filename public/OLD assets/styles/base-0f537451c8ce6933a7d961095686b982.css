@@ -1,0 +1,603 @@
+
+:root {
+  --couleur-navbar: #293040;
+  --couleur-accueil-detail_arguments-background: rgb(237, 238, 240);
+  --couleur-avertissement_important: rgba(221, 13, 13, 1);
+  --couleur-logo: #d5b263;
+}
+
+html, body{             /*hauteur de 100% évite les zones blanches sous le footer*/
+  height: 100%;  
+  display: flex;
+  flex-direction: column;
+ }
+ 
+ main {
+   flex: 1;             /* Permet au contenu principal de prendre tout l'espace disponible, évite les zones blanches sous le footer */
+ }
+
+footer {
+  background-color: var(--couleur-navbar);
+  color: var(--couleur-accueil-detail_arguments-background); 
+}
+
+.footer-texte {
+  color: var(--couleur-accueil-detail_arguments-background);
+  font-size: 1.1em;
+}
+
+.footer-texte-logo {
+  color: var(--couleur-logo);
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.footer-modale {
+  color: black;
+}
+
+/* A remplacer sur toutes les pages par h1!!! => Pour référencement */
+.titre { 
+  font-size: 1.05rem;
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 1.05rem;
+  font-weight: bold;
+}
+
+
+
+/*------------*/
+/*|Navigation|*
+/*------------*/
+ .navbar {
+  background-color: var(--couleur-navbar);
+}
+
+.nav_logo_img {
+  width: 200px; 
+}
+
+/*Si l'utilisateur n'est pas connecté*/
+.nav_pas_connecte {
+  color: var(--couleur-logo);
+  font-weight: bold;
+}
+
+
+
+/*--------------*/
+/*|Page Accueil|*
+/*--------------*/
+.accueil_logo {
+  text-align: center;
+  justify-content: center; 
+}
+
+.accueil_logo img {
+  width: 200px;
+  border-radius: 5%; 
+  text-align: center;
+  justify-content: center;                          /* Centre horizontalement */
+  align-items: center;                              /* Centre verticalement */
+  margin: 0 auto;
+}
+
+/* Div contenant le détail des arguments */
+.accueil_details_argument{
+   border-color: var(--couleur-accueil-detail_arguments-background);
+   background: var(--couleur-accueil-detail_arguments-background);
+  
+   padding: 15px;
+   height: 410px;                                   /*Hauteur à adapter en fonction du nbre d'arguments*/
+   font-size: 1.2rem;
+   border-radius: 5%; 
+
+   transition: all .4s .3s;
+
+   animation: animationTexteApparition 2s forwards; /* Pour l'apparition à l'ouverture de la page */
+   opacity: 0; 
+}
+
+/* Pour l'apparition à l'ouverture de la page */
+@keyframes animationTexteApparition {
+  0% {
+       opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+
+.accueil_argumentation {
+  margin: 0;             
+  padding: 0;           
+  
+  list-style: none;
+  list-style-position: inside;
+  text-align: left;
+}
+ 
+.accueil_argumentation li {
+  font-size: 1.2rem;
+  padding: 20px 30px;
+  margin: 7px 12px 7px 0px;
+  
+  background: rgba(214, 214, 221, 0.541);
+  border-radius: 6%; 
+
+  color : RGB(0, 0, 0);
+  z-index: 5;
+  position: relative;
+  cursor: pointer;
+  transition: all .4s;
+}
+
+.accueil_argumentation li::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  z-index: -1;
+  transition: all .4s;
+}
+
+.accueil_argumentation li:hover::before {
+  width: 100%;
+}
+
+.accueil_argumentation  li:nth-child(1)::before {
+  background: #6098f3;
+}
+
+.accueil_argumentation  li:nth-child(2)::before {
+  background: #e05656;
+}
+
+.accueil_argumentation  li:nth-child(3)::before {
+  background: #f4b400;
+}
+
+.accueil_argumentation  li:nth-child(4)::before {
+  background: #22c275;
+}
+
+.accueil_argumentation  li:nth-child(5)::before {
+  background: #bd52c7;
+}
+
+.accueil_argumentation  li:hover {
+  transform: translateX(12px);
+} 
+
+
+#monCarousel {
+  margin: auto;
+}
+
+/* Ajuster les images pour qu'elles remplissent bien */
+#monCarousel img {
+  width: 100%;
+  object-fit: cover;                            /* Pour remplir sans déformation */
+  border-radius: 5%;
+}
+
+ /* Taille fixe sur les grands écrans */
+ @media (min-width: 992px) {                    /* ≥992px (lg et plus) */
+  #monCarousel {
+      width: 600px;
+      height: auto;
+  }
+}
+
+/* Pleine largeur et ratio 1:1 sur les petits écrans */
+@media (max-width: 991px) {                     /* Moins de 992px (md et moins) */
+  #monCarousel {
+      width: 100%;
+      height: auto;                             /* Laisse le ratio s’adapter */
+  }
+
+  #monCarousel .carousel-inner {
+      aspect-ratio: 1/1;                        /* Assure une hauteur proportionnelle */
+  }
+}
+ 
+.cardPourReglesDuJeu{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} 
+.cardPourReglesDuJeuBody{
+  background: rgba(214, 214, 221, 0.541);
+}
+
+@media (min-width: 992px) {
+  .cardRegles {
+    width: 600px;
+      height: auto;
+  }
+}
+
+@media (max-width: 991px) {                     /* Moins de 992px (md et moins) */
+  .cardRegles {
+      width: 100%;
+      height: auto;                             /* Laisse le ratio s’adapter */
+  }
+}
+
+
+
+/*----------------------------------*/
+/*|Page créer une partie multijoueur|*
+/*-----------------------------------*/
+/*bouton*/
+.btn-primary {
+  background-color: #02101f;
+}
+
+/*Tableau*/
+.creer-partie__table th{
+    text-align: center;
+}
+
+.creer-partie__table .col_genre {
+    width: 25%;
+}
+
+.creer-partie__table .col_explication {
+  text-align: center;
+  width: 15%;
+}
+
+.creer-partie__table .col_exemple {
+  width: 30%;
+  word-wrap: break-word;                         /* Permet de couper les mots longs */
+  word-break: break-word;
+}
+
+.creer-partie__table .col_illustration {
+  text-align: center;
+  width: 30%;
+}
+
+.creer-partie__btn-modal-image{
+  border: none;  
+  background: none;
+  padding: 0; 
+  cursor: pointer;
+  min-width: 140px;
+  max-width: 160px;
+}
+
+.modalExplicationGenreLitteraire_exemples {
+  font-weight: bold;
+}
+
+@media (max-width: 991px) {                       /* Moins de 992px (md et moins) => la colonne exemple devient invisible */
+  .creer-partie__table .col_illustration .bouton_image {
+    min-width: 80px; 
+    max-width: 100px;
+  }
+
+  .creer-partie__btn-modal-image{
+    min-width: 80px;
+    max-width: 100px;
+  }
+  
+  .creer-partie__table .col_genre {
+    width: 42%;
+  }
+
+  .creer-partie__table .col_explication {
+    width: 28%;
+  }
+
+  .creer-partie__table .col_exemple {
+      display: none;
+  }
+
+  .creer-partie__table .col_illustration {
+    width: 30%;
+  }
+}
+
+
+
+/*----------------------------------*/
+/*|Page lancer une partie multijoueur|*
+/*-----------------------------------*/
+.lancer_partie_mulitijoueur__codeConnexion {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.lancer_partie_mulitijoueur__codeConnexionPetit {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.lancer_partie_mulitijoueur__tableau_lien {
+  width: 50%;
+  height: 100%;                                   /*Le tableau occupe 100% de la hauteur du div (nécessaire pour fixer hauteur des td*/
+}
+
+.lancer_partie_mulitijoueur__tableau_lien td {
+  margin: 0;
+  padding: 0;
+}
+.lancer_partie_mulitijoueur__tableau_lien .ligne_communication_lien {
+  border: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.lancer_partie_mulitijoueur__tableau_lien .cellule_lien_et_code {
+  width: 78%;
+  padding-bottom: 5px;
+}
+
+.lancer_partie_mulitijoueur__tableau_lien .cellule_boutonCopier {
+  width: 35px;
+  height: 100%;                                   /* La cellule occupe 100% de la hauteur de la ligne (nécessaire pour centrage) */
+  
+  display: flex;
+  flex-direction: column; 
+  justify-content: center;                        /* Centre horizontalement */
+  align-items: center;                            /* Centre verticalement */
+}
+
+.lancer_partie_mulitijoueur__tableau_lien .boutonCopier {
+  background: #ffffff;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lancer_partie_mulitijoueur__tableau_lien .cellule_infoCopie {
+  display: flex;
+  height: 100%;                                   /* La cellule occupe 100% de la hauteur de la ligne (nécessaire pour centrage) */
+  flex-direction: row; 
+  justify-content: right;                         /* Centre horizontalement */
+  align-items: center; 
+  width: 48px;
+  margin: 0;
+  padding: 0;
+}
+
+/*Tableau liste des joueurs*/
+.lancer_partie_mulitijoueur__tableau_lien_tableau_liste_joueurs {
+   width: 50%;
+}
+
+.lancer_partie_mulitijoueur__tableau_lien_tableau_liste_joueurs th
+{
+  text-align: center;
+}
+
+.lancer_partie_mulitijoueur__tableau_lien_tableau_liste_joueurs .login
+{
+  width: 70%;
+}
+
+.lancer_partie_mulitijoueur__tableau_lien_tableau_liste_joueurs .role
+{
+  width: 30%;
+}
+
+@media (max-width: 991px) {                       /* Moins de 992px (md et moins) => les tableaux doivent prendre toute la largeur de la page */
+
+  .lancer_partie_mulitijoueur__tableau_lien{
+    width: 100%;
+  }
+
+    .lancer_partie_mulitijoueur__tableau_lien_tableau_liste_joueurs {
+      width: 100%;
+  }
+
+  
+  .lancer_partie_mulitijoueur__tableau_lien_tableau_liste_joueurs .login {
+    width: 50%;
+  }
+
+  .lancer_partie_mulitijoueur__tableau_lien_tableau_liste_joueurs .role {
+    width: 50%;
+  }
+
+}
+
+.demarrage_messageBienvenue {
+  font-size: 1.5rem;
+}
+
+
+/*--------------------------------------------*/
+/*|Page pour rejoindre une partie multijoueur|*
+/*--------------------------------------------*/
+.rejoindre_une_partie_multi__div_Principal {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.rejoindre_une_partie_multi__div_formulaire {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.rejoindre_une_partie_multi__codeConnexion {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.rejoindre_une_partie_multi__table{
+  width: 50%;
+}
+
+.rejoindre_une_partie_multi__table th{
+  text-align: left;
+  width: 33%;
+}
+
+.rejoindre_une_partie_multi__table .rejoindre_nom {
+  width: 50%;
+}
+
+.rejoindre_une_partie_multi__table .rejoindre_illustration {
+  width: 33%;
+}
+
+.rejoindre_une_partie_multi__table .rejoindre_illustration .bouton_image {
+  width: 100px;
+}
+
+
+
+/*-----------------------------------------------*/
+/*|Page pour Twig epreuve pour partie multijoueur|* 
+/*-----------------------------------------------*/
+#divIdCompteARebourEpreuve{
+  position: sticky;
+  top: 100px;
+  right: 130px;
+  left: 100%;
+  font-weight: bold;
+  width: 180px;
+  height: 30px;
+  opacity: 0.5;
+  text-align: right;
+  color: #e91313;
+}
+
+.epreuve_table{
+  width: 100%;
+}
+
+.epreuve_th{
+  text-align: left;
+  width: 33%;
+}
+
+.epreuve_nom {
+  width: 33%;
+}
+
+.epreuve_explication {
+  width: 200%;
+}
+
+.epreuve_illustration {
+  width: 33%;
+  max-width: 100px;
+}
+
+.epreuve_table .epreuve_illustration .bouton_image {
+  width: 100px;
+}
+
+
+
+/*--------------------------------------*/
+/*|Page pour noter une partie multijoueur|*
+/*--------------------------------------*/
+#divIdCompteARebourNotation{
+  position: sticky;
+  top: 100px;
+  right: 130px;
+  left: 100%;
+  font-weight: bold;
+  width: 180px;
+  height: 30px;
+  opacity: 0.5;
+  text-align: right;
+  color: #e91313;
+}
+
+.range-container {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box; 
+}
+
+.range-slider {
+  width: 100%;
+}
+
+.range-value {
+  position: absolute;
+  top: -7px; 
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.toutNoter_table{
+  width: 100%;
+}
+
+.toutNoter_th{
+  text-align: left;
+  width: 33%;
+}
+
+.toutNoter_nom {
+  width: 33%;
+}
+
+.toutNoter_explication {
+  width: 200%;
+}
+
+.toutNoter_illustration {
+  width: 33%;
+  max-width: 100px;
+}
+
+.toutNoter_table .toutNoter_illustration .bouton_image {
+  width: 100px;
+}
+
+.noter_messageBienvenue {
+  font-size: 1.5rem;
+}
+
+.noter_codeConnexion {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+
+
+/*----------------------*/
+/*|Page des classements|*
+/*----------------------*/
+.classement_epreuve {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.classement_butEpreuve{
+  font-size: 1.05em;
+  font-weight: bold;
+}
+
+h1{
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.classement_code {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+h2{
+  font-size: 1.3rem;
+  font-weight: bold;
+}                  

@@ -3,7 +3,6 @@
 {% block body  %}
 
 <div class="accueil_body ">
-     {% include 'home/partials_regles/modal_regles.html.twig' %}
 
     <div class="container ">  
        
@@ -22,6 +21,7 @@
                 Bienvenue sur le jeu des écrivains!
             </div>
         </div>
+
 
         <div id="monCarousel" class="carousel slide my-3 " data-bs-ride="carousel">
             <div class="carousel-inner">
@@ -52,7 +52,7 @@
 
         <div class="cardPourReglesDuJeu">
 
-            <div class="card cardRegles"  class="my-3 ">
+            <div class="card cardRegles my-3">
 
                 <img src="{{ asset(imagePourRegleDuJeu) }}" class="card-img-top" alt="Image de fond pour la règle du jeu">
                 <div class="card-body cardPourReglesDuJeuBody">

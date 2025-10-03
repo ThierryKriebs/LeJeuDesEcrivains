@@ -12,8 +12,9 @@ class HomeController extends AbstractController
     public function index(): Response
     {
         //Liste toutes les images
+        // glob va chercher les images dans: public/assets/images/Caroussel/
         $images = glob('assets/images/Caroussel/' . '*.{jpg,jpeg,png,gif,webp}', GLOB_BRACE);
-        $imagePourRegleDuJeu = 'images/RegleDuJeu/VilleFuturiste.jpeg'; /*glob('assets/images/regle/' . '*.{jpg,jpeg,png,gif,webp}', GLOB_BRACE);*/
+        $imagePourRegleDuJeu = 'images/RegleDuJeu/VilleFuturiste.webp';
         
 
         return $this->render('home/index.html.twig', [

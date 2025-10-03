@@ -1,7 +1,7 @@
 
 :root {
   --couleur-navbar: #293040;
-  --couleur-accueil-detail_arguments-background: rgba(214, 214, 221, 0.541);
+  --couleur-accueil-detail_arguments-background: rgba(237, 238, 240, 0.877);
   --couleur-avertissement_important: rgba(221, 13, 13, 1);
   --couleur-logo: #d5b263;
 }
@@ -385,6 +385,10 @@ h1 {
 .lancer_partie_mulitijoueur__tableau_lien_tableau_liste_joueurs .role
 {
   width: 30%;
+}
+
+.lancer_partie_mulitijoueur__ul{
+   margin: 0;
 }
 
 @media (max-width: 991px) {                       /* Moins de 992px (md et moins) => les tableaux doivent prendre toute la largeur de la page */

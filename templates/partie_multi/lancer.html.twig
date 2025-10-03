@@ -32,7 +32,9 @@
                 <table class="table lancer_partie_mulitijoueur__tableau_lien">
                     <tr>
                         <td colspan=3 class="ligne_communication_lien">
-                            <li>Communiquez leur simplement ce lien: </li> 
+                            <ul class="lancer_partie_mulitijoueur__ul">
+                                <li>Communiquez leur simplement ce lien: </li> 
+                            </ul>
                         </td>
                     </tr>
                     <tr>
@@ -41,7 +43,10 @@
                         </td>
 
                         <td class="cellule_boutonCopier">
-                            <button class="boutonCopier" onclick="copierPressePapier()"> <i class="fa-regular fa-copy"></i></button>
+                            <button class="boutonCopier" type="button" aria-label="Copier" title="Copier l'url de la partie dans le presse-papiers" 
+                                onclick="copierPressePapier()"> 
+                                <i class="fa-regular fa-copy"  aria-hidden="true"></i>
+                            </button>
                         </td>
                         
                         <td>
@@ -49,17 +54,20 @@
                         </td>
                     <tr>
                         <td colspan=3 class="ligne_communication_lien">
-                            <li>Ou ce code de connexion: </li> 
+                            <ul class="lancer_partie_mulitijoueur__ul">
+                                <li>Ou ce code de connexion: </li> 
+                            </ul>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <span class="lancer_partie_mulitijoueur__codeConnexionPetit" id="codeACopier">{{ partie.code_connexion  }}</span>
-                            
                         </td>
                         
                         <td class="cellule_boutonCopier">
-                            <button class="boutonCopier" onclick="copierPressePapier('codeACopier', 'TextElCopie2', 'innerText')"> <i class="fa-regular fa-copy"></i></button>
+                            <button class="boutonCopier" type="button" aria-label="Copier" title="Copier le code dans le presse-papiers" onclick="copierPressePapier('codeACopier', 'TextElCopie2', 'innerText')"> 
+                                <i class="fa-regular fa-copy" aria-hidden="true"></i>
+                            </button>
                         </td>
                         
                         <td>
